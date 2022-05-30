@@ -1,5 +1,11 @@
 import React from "react";
 
+import Category from "../components/Category";
+
+import PizzaBlock from "../components/PizzaBlock";
+import Sort from "../components/Sort";
+import axios from "axios";
+import PizzaLoadingBlock from "../components/PizzaLoading";
 export default function Home() {
   const [items, setItems] = React.useState([]);
   const [isloading, setLoading] = React.useState(true);
