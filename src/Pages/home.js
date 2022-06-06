@@ -19,6 +19,7 @@ export default function Home() {
           setLoading(false);
         }, 1000);
       });
+    window.scrollTo(0, 0);
   }, []);
 
   return (
