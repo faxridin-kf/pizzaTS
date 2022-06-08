@@ -9,25 +9,43 @@ import PizzaLoadingBlock from "../components/PizzaLoading";
 export default function Home() {
   const [items, setItems] = React.useState([]);
   const [isloading, setLoading] = React.useState(true);
+  const [categoryId, setCategoryId] = React.useState(0);
+  const [sortType, setSortType] = React.useState({
+    name: "популярности",
+    sort: "raiting",
+  });
 
   React.useEffect(() => {
+    setLoading(true);
     axios
-      .get("https://628f83850e69410599ddd5e1.mockapi.io/items")
+      .get(
+        `https://628f83850e69410599ddd5e1.mockapi.io/items?${
+          categoryId > 0 ? `category=${categoryId}` : ""
+        }&sortBy=${sortType.sort}&order=desc`
+      )
       .then((data) => {
-        setTimeout(() => {
-          setItems(data.data);
-          setLoading(false);
-        }, 1000);
+        setItems(data.data);
+        setLoading(false);
       });
     window.scrollTo(0, 0);
-  }, []);
+  }, [categoryId]);
 
   return (
     <>
       <div className="container">
         <div className="content__top">
-          <Category />
-          <Sort />
+          <Category
+            val={categoryId}
+            onClickcategory={(i) => {
+              setCategoryId(i);
+            }}
+          />
+          <Sort
+            val={sortType}
+            onClickSort={(i) => {
+              setSortType(i);
+            }}
+          />
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">
